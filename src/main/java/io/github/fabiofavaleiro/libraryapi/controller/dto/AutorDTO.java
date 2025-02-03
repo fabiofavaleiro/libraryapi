@@ -1,11 +1,28 @@
 package io.github.fabiofavaleiro.libraryapi.controller.dto;
 
 import io.github.fabiofavaleiro.libraryapi.model.Autor;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-public record AutorDTO(UUID id, String nome, LocalDate dataNascimento, String nacionalidade) {
+public record AutorDTO(
+        UUID id,
+        @NotBlank(message = "Campo obrigatorio!")
+        @Size(min = 2,max = 100, message = "Valor informado para 'nome' é maior ou menior que o tamanho permitido!")
+        String nome,
+        @NotNull(message = "Campo obrigatorio!")
+        @Past(message = "'Data de nascimento' precisa estar no passado!")
+        LocalDate dataNascimento,
+        @NotBlank(message = "Campo obrigatorio!")
+        @Size(min = 2,max = 100, message = "Valor informado para 'nacionalidade' é maior ou menior que o tamanho permitido!")
+        String nacionalidade
+
+)
+{
 
     public Autor mapearParaAutor(){
         Autor autor = new Autor();

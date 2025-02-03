@@ -38,7 +38,7 @@ public class Autor {
 
 
     //@Transient
-    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "autor", fetch = FetchType.LAZY) // cascade = CascadeType.ALL,
     private List<Livro> livros;
 
     @CreatedDate

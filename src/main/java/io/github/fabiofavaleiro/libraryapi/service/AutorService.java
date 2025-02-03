@@ -1,24 +1,33 @@
 package io.github.fabiofavaleiro.libraryapi.service;
 
+import io.github.fabiofavaleiro.libraryapi.exception.OperacaoNaoPermitidaException;
 import io.github.fabiofavaleiro.libraryapi.model.Autor;
 import io.github.fabiofavaleiro.libraryapi.repository.AutorRepository;
+import io.github.fabiofavaleiro.libraryapi.repository.LivroRepository;
+import io.github.fabiofavaleiro.libraryapi.validator.AutorValidator;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.naming.OperationNotSupportedException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class AutorService {
 
     private final AutorRepository repository;
+    private final AutorValidator validator;
+    private final LivroRepository livroRepository;
 
-    public AutorService(AutorRepository repository){
-        this.repository = repository;
-    }
+
 
     public Autor salvar(Autor autor){
+        validator.validar(autor);
         return repository.save(autor);
     }
 
@@ -27,6 +36,7 @@ public class AutorService {
             throw new IllegalArgumentException("Para atualizar é necessario que o autor ja esteja cadastrado");
 
         }
+        validator.validar(autor);
         repository.save(autor);
     }
 
@@ -35,6 +45,9 @@ public class AutorService {
     }
 
     public void deletar(Autor autor){
+        if (possuiLivro(autor)){
+            throw new OperacaoNaoPermitidaException("O autor possui livro(s) Cadastrado(s), por isso não é permitido apaga-lo");
+        }
         repository.delete(autor);
     }
 
@@ -53,5 +66,19 @@ public class AutorService {
         }
         return repository.findAll();
 
+    }
+
+    public List<Autor> pesquisaByExample(String nome, String nacionalidade){
+        var autor = new Autor();
+        autor.setNome(nome);
+        autor.setNacionalidade(nacionalidade);
+        ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example<Autor> autorExample = Example.of(autor,matcher);
+        return repository.findAll(autorExample);
+
+    }
+
+    public boolean possuiLivro(Autor autor){
+        return livroRepository.existsByAutor(autor);
     }
 }
