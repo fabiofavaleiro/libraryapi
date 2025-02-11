@@ -49,7 +49,12 @@ public class LivroController implements GenericController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ResultadoPesquisaLivroDTO>> pesquisa(@RequestParam(value = "isbn", required = false) String isbn,@RequestParam(value = "titulo", required = false) String titulo,@RequestParam(value = "nome_autor", required = false) String nomeAutor,@RequestParam(value = "genero", required = false) GeneroLivro genero,@RequestParam(value = "ano-publicacao", required = false) Integer anoPublicacao){
+    public ResponseEntity<List<ResultadoPesquisaLivroDTO>> pesquisa(
+            @RequestParam(value = "isbn", required = false) String isbn,
+            @RequestParam(value = "titulo", required = false) String titulo,
+            @RequestParam(value = "nome-autor", required = false) String nomeAutor,
+            @RequestParam(value = "genero", required = false) GeneroLivro genero,
+            @RequestParam(value = "ano-publicacao", required = false) Integer anoPublicacao){
 
         var resultado = service.pesquisa(isbn, titulo, nomeAutor, genero, anoPublicacao);
         var lista = resultado.stream().map(mapper::toDTo).collect(Collectors.toList());
