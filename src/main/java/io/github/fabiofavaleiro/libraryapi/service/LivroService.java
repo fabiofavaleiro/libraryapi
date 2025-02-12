@@ -63,4 +63,16 @@ public class LivroService {
 
         return repository.findAll(specs);
     }
+
+
+    public void atualizar(Livro livro) {
+
+        if (livro.getId() == null){
+            throw new IllegalArgumentException("Nobre usuario/porgramandor deste sistema: O livro não pode ser atualizado pois ainda não existe na base de dados");
+        }
+
+        //livro.setIdUsuario(UUID.randomUUID());
+         repository.save(livro);
+
+    }
 }
