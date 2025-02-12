@@ -5,6 +5,7 @@ import io.github.fabiofavaleiro.libraryapi.model.Livro;
 import io.github.fabiofavaleiro.libraryapi.repository.AutorRepository;
 import io.github.fabiofavaleiro.libraryapi.repository.LivroRepository;
 import io.github.fabiofavaleiro.libraryapi.repository.specs.LivroSpecs;
+import io.github.fabiofavaleiro.libraryapi.validator.LivroValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -22,8 +23,10 @@ public class LivroService {
 
 
     private final LivroRepository repository;
+    private final LivroValidator validator;
 
     public Livro salvar(Livro livro) {
+        validator.validar(livro);
         return repository.save(livro);
     }
 
@@ -72,6 +75,7 @@ public class LivroService {
         }
 
         //livro.setIdUsuario(UUID.randomUUID());
+        validator.validar(livro);
          repository.save(livro);
 
     }
