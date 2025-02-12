@@ -11,6 +11,7 @@ import io.github.fabiofavaleiro.libraryapi.model.Livro;
 import io.github.fabiofavaleiro.libraryapi.service.LivroService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,12 +50,22 @@ public class LivroController implements GenericController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ResultadoPesquisaLivroDTO>> pesquisa(@RequestParam(value = "isbn", required = false) String isbn, @RequestParam(value = "titulo", required = false) String titulo, @RequestParam(value = "nome-autor", required = false) String nomeAutor, @RequestParam(value = "genero", required = false) GeneroLivro genero, @RequestParam(value = "ano-publicacao", required = false) Integer anoPublicacao){
+    public ResponseEntity<Page<ResultadoPesquisaLivroDTO>> pesquisa(
+            @RequestParam(value = "isbn", required = false) String isbn,
+            @RequestParam(value = "titulo", required = false) String titulo,
+            @RequestParam(value = "nome-autor", required = false) String nomeAutor,
+            @RequestParam(value = "genero", required = false) GeneroLivro genero,
+            @RequestParam(value = "ano-publicacao", required = false) Integer anoPublicacao,
+            @RequestParam(value = "pagina", defaultValue = "0") Integer pagina,
+            @RequestParam(value = "tamanho-pagina", defaultValue = "9") Integer tamanhoPagina
+    ){
 
-        var resultado = service.pesquisa(isbn, titulo, nomeAutor, genero, anoPublicacao);
-        var lista = resultado.stream().map(mapper::toDTo).collect(Collectors.toList());
+        Page<Livro> paginaResultado = service.pesquisa(isbn, titulo, nomeAutor, genero, anoPublicacao, pagina, tamanhoPagina);
+        Page<ResultadoPesquisaLivroDTO> resultado = paginaResultado.map(mapper::toDTo);
 
-        return ResponseEntity.ok(lista);
+        //var lista = paginaResultado.stream().map(mapper::toDTo).collect(Collectors.toList());
+
+        return ResponseEntity.ok(resultado);
     }
 
     @PutMapping("{id}")

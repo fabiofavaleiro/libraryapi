@@ -3,6 +3,7 @@ package io.github.fabiofavaleiro.libraryapi.repository;
 import io.github.fabiofavaleiro.libraryapi.model.Autor;
 import io.github.fabiofavaleiro.libraryapi.model.GeneroLivro;
 import io.github.fabiofavaleiro.libraryapi.model.Livro;
+import org.hibernate.query.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.print.Pageable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -17,12 +19,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 
-
-
-
-
-
 public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecificationExecutor<Livro> {
+
+    //Page<Livro> findByAutorPage(Autor autor, Pageable pageable);
 
     List<Livro> findByAutor(Autor autor);
 
