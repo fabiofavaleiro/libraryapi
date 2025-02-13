@@ -7,6 +7,7 @@ import io.github.fabiofavaleiro.libraryapi.exception.OperacaoNaoPermitidaExcepti
 import io.github.fabiofavaleiro.libraryapi.exception.RegistroDuplicadoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -49,10 +50,16 @@ public class GlobalExceptionHandler {
     }
 
 
-    @ExceptionHandler
+    @ExceptionHandler(CampoInvalidoException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ErroResposta handleCampoInvalidoException(CampoInvalidoException e){
         return new ErroResposta(HttpStatus.UNPROCESSABLE_ENTITY.value(), "Erro de validação de campo.", List.of(new ErroCampo(e.getCampo(), e.getMessage())));
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErroResposta handleAccessDaniedException(AccessDeniedException e){
+        return new ErroResposta(HttpStatus.FORBIDDEN.value(), "Caro utilizador deste sistema, o usuario que está usando não possui autorização para executar esta ação", List.of());
     }
 
     @ExceptionHandler(RuntimeException.class)

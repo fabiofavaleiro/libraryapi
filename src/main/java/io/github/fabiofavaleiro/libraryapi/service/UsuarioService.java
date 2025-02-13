@@ -21,7 +21,7 @@ public class UsuarioService {
         repository.save(usuario);
     }
 
-    public Usuario ObterPorLOgin(String login){
+    public Usuario obterPorLogin(String login){
         return repository.findByLogin(login);
 
     }
