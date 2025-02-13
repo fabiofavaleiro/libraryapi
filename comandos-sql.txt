@@ -24,9 +24,14 @@ constraint chk_genero check(genero in ('FICCAO', 'FANTASIA', 'MISTERIO', 'ROMANC
 
 select * from autor
 
+drop table usuario
+
+select * from usuario
+
 create table usuario(
     id uuid not null primary key,
     login varchar(20) not null unique,
     senha varchar(300) not null,
+	email varchar(150) not null,
     roles varchar[]
 );

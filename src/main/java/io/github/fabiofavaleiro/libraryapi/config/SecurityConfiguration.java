@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -55,7 +56,7 @@ public class SecurityConfiguration {
     }
 
 
-    @Bean
+    //@Bean
     public UserDetailsService userDetailsService(UsuarioService usuarioService){
 
         return new CustomUserDetailsService(usuarioService);
@@ -73,4 +74,12 @@ public class SecurityConfiguration {
 
         return new InMemoryUserDetailsManager(user1, user2);*/
     }
+
+    @Bean
+    public GrantedAuthorityDefaults grantedAuthorityDefaults(){
+
+        return new GrantedAuthorityDefaults("");
+
+    }
+
 }
