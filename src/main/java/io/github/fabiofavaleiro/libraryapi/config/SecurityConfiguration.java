@@ -28,27 +28,24 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .formLogin(configurer ->{
+                /*.formLogin(configurer ->{
                     configurer.loginPage("/login").permitAll();
-                })
-                //.formLogin(Customizer.withDefaults())
+                })*/
+                .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize ->{
-
                     authorize.requestMatchers("/login").permitAll();
                     authorize.requestMatchers(HttpMethod.POST,"/usuarios").permitAll();
-
                     //authorize.requestMatchers(HttpMethod.POST,"/autores/**").hasAuthority("CADASTRAR_AUTOR");
                     //authorize.requestMatchers("/autores/**").hasRole("ADMIN");
                     //authorize.requestMatchers(HttpMethod.POST,"/autores/**").hasRole("ADMIN");
                     //authorize.requestMatchers(HttpMethod.DELETE,"/autores/**").hasRole("ADMIN");
                     //authorize.requestMatchers(HttpMethod.PUT,"/autores/**").hasRole("ADMIN");
                     // authorize.requestMatchers(HttpMethod.GET,"/autores/**").hasAnyRole( "USER", "ADMIN");
-
                     //authorize.requestMatchers("/livros/**").hasAnyRole("ADMIN", "USER");
-
                     authorize.anyRequest().authenticated();
                 })
+                .oauth2Login(Customizer.withDefaults())
                 .build();
     }
 
