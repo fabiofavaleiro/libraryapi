@@ -2,9 +2,11 @@ package io.github.fabiofavaleiro.libraryapi.service;
 
 import io.github.fabiofavaleiro.libraryapi.model.GeneroLivro;
 import io.github.fabiofavaleiro.libraryapi.model.Livro;
+import io.github.fabiofavaleiro.libraryapi.model.Usuario;
 import io.github.fabiofavaleiro.libraryapi.repository.AutorRepository;
 import io.github.fabiofavaleiro.libraryapi.repository.LivroRepository;
 import io.github.fabiofavaleiro.libraryapi.repository.specs.LivroSpecs;
+import io.github.fabiofavaleiro.libraryapi.security.SecurityService;
 import io.github.fabiofavaleiro.libraryapi.validator.LivroValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +29,12 @@ public class LivroService {
 
     private final LivroRepository repository;
     private final LivroValidator validator;
+    private final SecurityService securityService;
 
     public Livro salvar(Livro livro) {
         validator.validar(livro);
+        Usuario usuario = securityService.obterUsuarioLogado();
+        livro.setUsuario(usuario);
         return repository.save(livro);
     }
 
