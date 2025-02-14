@@ -23,5 +23,4 @@ public class LoginViewController {
         }
         return "Ola, caro " + authentication.getName() + "!";
     }
-
 }

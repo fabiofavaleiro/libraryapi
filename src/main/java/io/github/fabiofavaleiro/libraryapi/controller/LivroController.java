@@ -96,5 +96,4 @@ public class LivroController implements GenericController {
 
     }
 
-
 }
