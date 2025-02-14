@@ -1,11 +1,14 @@
 package io.github.fabiofavaleiro.libraryapi.security;
 
 
+import io.github.fabiofavaleiro.libraryapi.model.Usuario;
+import io.github.fabiofavaleiro.libraryapi.service.UsuarioService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -16,6 +19,8 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class LoginSocialSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+
+    private final UsuarioService usuarioService;
 
     @Override
     public void onAuthenticationSuccess(
@@ -29,7 +34,16 @@ public class LoginSocialSuccessHandler extends SavedRequestAwareAuthenticationSu
 
         String email = oAuth2User.getAttribute("email");
 
-        System.out.println(email);
+        Usuario usuario = usuarioService.obterPorEmail(email);
+
+        authentication = new CustomAuthentication(usuario);
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        super.onAuthenticationSuccess(request, response, authentication);
+
+
+        //System.out.println(email);
         //super.onAuthenticationSuccess(request, response, authentication);
     }
 
