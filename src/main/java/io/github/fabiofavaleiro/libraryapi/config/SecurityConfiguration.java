@@ -85,7 +85,6 @@ public class SecurityConfiguration {
 
         return new InMemoryUserDetailsManager(user1, user2);*//*
     }*/
-
     //configura o prefixo role
     @Bean
     public GrantedAuthorityDefaults grantedAuthorityDefaults(){
