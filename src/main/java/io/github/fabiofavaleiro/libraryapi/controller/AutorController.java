@@ -118,5 +118,4 @@ public class AutorController  implements GenericController{
 //        return new ErroResposta((HttpStatus.INTERNAL_SERVER_ERROR.value()),message,List.of());
 //    }
 
-
 }

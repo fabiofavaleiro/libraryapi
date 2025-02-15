@@ -11,13 +11,13 @@ import java.util.UUID;
 
 public record AutorDTO(
         UUID id,
-        @NotBlank(message = "Campo obrigatorio!")
+        @NotBlank(message = "O 'nome' é um campo obrigatorio!")
         @Size(min = 2,max = 100, message = "Valor informado para 'nome' é maior ou menior que o tamanho permitido!")
         String nome,
-        @NotNull(message = "Campo obrigatorio!")
+        @NotNull(message = "A 'data de nascimento' é um campo obrigatorio!")
         @Past(message = "'Data de nascimento' precisa estar no passado!")
         LocalDate dataNascimento,
-        @NotBlank(message = "Campo obrigatorio!")
+        @NotBlank(message = "A 'nacionalidade' é um campo obrigatorio!")
         @Size(min = 2,max = 100, message = "Valor informado para 'nacionalidade' é maior ou menior que o tamanho permitido!")
         String nacionalidade
 

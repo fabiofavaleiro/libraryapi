@@ -24,5 +24,4 @@ public class UsuarioController {
         var usuario = mapper.toEntity(dto);
         service.salvar(usuario);
     }
-
 }
