@@ -100,9 +100,6 @@ public class SecurityConfiguration {
 
         var converter = new JwtAuthenticationConverter();
         converter.setJwtGrantedAuthoritiesConverter(authoritiesConverter);
-
         return converter;
-
     }
-
 }
