@@ -39,13 +39,13 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize ->{
                     authorize.requestMatchers("/login").permitAll();
                     authorize.requestMatchers(HttpMethod.POST,"/usuarios").permitAll();
-                    //authorize.requestMatchers(HttpMethod.POST,"/autores/**").hasAuthority("CADASTRAR_AUTOR");
-                    //authorize.requestMatchers("/autores/**").hasRole("ADMIN");
-                    //authorize.requestMatchers(HttpMethod.POST,"/autores/**").hasRole("ADMIN");
-                    //authorize.requestMatchers(HttpMethod.DELETE,"/autores/**").hasRole("ADMIN");
-                    //authorize.requestMatchers(HttpMethod.PUT,"/autores/**").hasRole("ADMIN");
-                    // authorize.requestMatchers(HttpMethod.GET,"/autores/**").hasAnyRole( "USER", "ADMIN");
-                    //authorize.requestMatchers("/livros/**").hasAnyRole("ADMIN", "USER");
+                    /*authorize.requestMatchers(HttpMethod.POST,"/autores/**").hasAuthority("CADASTRAR_AUTOR");
+                    authorize.requestMatchers("/autores/**").hasRole("ADMIN");
+                    authorize.requestMatchers(HttpMethod.POST,"/autores/**").hasRole("ADMIN");
+                    authorize.requestMatchers(HttpMethod.DELETE,"/autores/**").hasRole("ADMIN");
+                    authorize.requestMatchers(HttpMethod.PUT,"/autores/**").hasRole("ADMIN");
+                     authorize.requestMatchers(HttpMethod.GET,"/autores/**").hasAnyRole( "USER", "ADMIN");
+                    authorize.requestMatchers("/livros/**").hasAnyRole("ADMIN", "USER");*/
                     authorize.anyRequest().authenticated();
                 })
                 .oauth2Login(oauth2 -> {
@@ -56,7 +56,7 @@ public class SecurityConfiguration {
                 .build();
     }
 
-    @Bean
+/*    @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(12);
     }
@@ -66,7 +66,8 @@ public class SecurityConfiguration {
     public UserDetailsService userDetailsService(UsuarioService usuarioService){
 
         return new CustomUserDetailsService(usuarioService);
-/*        UserDetails user1= User.builder()
+*/
+    /*        UserDetails user1= User.builder()
                 .username("usuario")
                 .password(encoder.encode("123"))
                 .roles("USER")
@@ -79,8 +80,8 @@ public class SecurityConfiguration {
                 .roles("ADMIN")
                 .build();
 
-        return new InMemoryUserDetailsManager(user1, user2);*/
-    }
+        return new InMemoryUserDetailsManager(user1, user2);*//*
+    }*/
 
     @Bean
     public GrantedAuthorityDefaults grantedAuthorityDefaults(){
