@@ -72,6 +72,7 @@ public class SecurityConfiguration {
                 .roles("USER")
                 .build();
 
+
         UserDetails user2= User.builder()
                 .username("admin")
                 .password(encoder.encode("321"))
