@@ -33,14 +33,14 @@ public class SecurityConfiguration {
             HttpSecurity http, LoginSocialSuccessHandler successHandler) throws Exception{
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+                .httpBasic(Customizer.withDefaults())
                 .formLogin(configurer ->{
                     configurer.loginPage("/login");
                 })
                 //.formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize ->{
-                    authorize.requestMatchers("/login").permitAll();
-                    authorize.requestMatchers(HttpMethod.POST,"/usuarios").permitAll();
+                    authorize.requestMatchers("/login/**").permitAll();
+                    authorize.requestMatchers(HttpMethod.POST,"/usuarios/**").permitAll();
                     /*authorize.requestMatchers(HttpMethod.POST,"/autores/**").hasAuthority("CADASTRAR_AUTOR");
                     authorize.requestMatchers("/autores/**").hasRole("ADMIN");
                     authorize.requestMatchers(HttpMethod.POST,"/autores/**").hasRole("ADMIN");

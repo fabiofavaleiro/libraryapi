@@ -17,7 +17,7 @@ public class ClientService {
     private final PasswordEncoder encoder;
 
     public Client salvar(Client client){
-        var senhaCriptografada = encoder.encode(client.getClientId());
+        var senhaCriptografada = encoder.encode(client.getClientSecret());
         client.setClientSecret(senhaCriptografada);
 
         return repository.save(client);
