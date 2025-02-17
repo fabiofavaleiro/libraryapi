@@ -23,6 +23,16 @@ spring:
 logging:
   life:
     name: app.log
+  level: warn
+
+#Leveis de hierarquia o de cima incloba todos os de baixo:
+
+# trace
+# debug
+# info
+# warn
+# error
+
 
 springdoc:
   override-with-generic-response: false
