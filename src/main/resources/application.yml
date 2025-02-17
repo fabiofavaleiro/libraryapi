@@ -27,7 +27,7 @@ logging:
     root: warn
     io:
       github:
-        fabiofavaleiro: trace
+        fabiofavaleiro: warn
 #          conbtroller: error
         web: debug
         security: trace

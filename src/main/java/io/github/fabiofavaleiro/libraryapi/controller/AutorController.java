@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -34,6 +35,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/autores")
 @RequiredArgsConstructor
 @Tag(name = "Autores")
+@Slf4j
 public class AutorController  implements GenericController{
 
     private final AutorService service;
@@ -113,6 +115,11 @@ public class AutorController  implements GenericController{
             @ApiResponse(responseCode = "200", description = "Sucesso!")
     })
     public ResponseEntity<List<AutorDTO>> pesquisar(@RequestParam(value = "nome", required = false) String nome,@RequestParam(value = "nacionalidade", required = false) String nacionalidade){
+        log.trace("pesquisa autores");
+        log.debug("pesquisa autores");
+        log.info("pesquisa autores");
+        log.warn("pesquisa autores");
+        log.error("pesquisa autores");
         List<Autor> resultado = service.pesquisaByExample(nome, nacionalidade);
         List<AutorDTO> lista = resultado.stream().map(mapper :: toDTO).collect(Collectors.toList());
         return ResponseEntity.ok(lista);
