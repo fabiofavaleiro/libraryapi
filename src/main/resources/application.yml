@@ -23,7 +23,14 @@ spring:
 logging:
   life:
     name: app.log
-  level: warn
+  level:
+    root: warn
+    io:
+      github:
+        fabiofavaleiro
+#    orb:
+#      springframework:
+#        web: debug
 
 #Leveis de hierarquia o de cima incloba todos os de baixo:
 
