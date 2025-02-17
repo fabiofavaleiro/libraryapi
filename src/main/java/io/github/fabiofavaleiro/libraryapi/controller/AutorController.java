@@ -35,13 +35,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/autores")
 @RequiredArgsConstructor
 @Tag(name = "Autores")
-@Slf4j
+@Slf4j // para adicionar logs nesta classe
 public class AutorController  implements GenericController{
 
     private final AutorService service;
     //private final SecurityService securityService;
     private final AutorMapper mapper;
-
 
     @PostMapping
     @PreAuthorize("hasRole('GERENTE')")
@@ -52,7 +51,7 @@ public class AutorController  implements GenericController{
             @ApiResponse(responseCode = "409", description = "Autor já cadastrado!")
     })
     public ResponseEntity<Void> salvar(@RequestBody @Valid AutorDTO dto){
-
+        log.info("Cadastrando novo autor: {} ", dto.nome());
         //System.out.println(authentication);
         //UserDetails usuarioLogado = (UserDetails) authentication.getPrincipal();
         //Usuario usuario = usuarioService.obterPorLogin(usuarioLogado.getUsername());
@@ -99,6 +98,7 @@ public class AutorController  implements GenericController{
             @ApiResponse(responseCode = "400", description = "Não pode ser excluido pois possui livro cadastrado!")
     })
     public ResponseEntity<Void> deletar(@PathVariable("id") String id){
+        log.info("Deletando autor de ID: {} ", id);
         var idAutor = UUID.fromString(id);
         Optional<Autor> autorOptional = service.obterPorId(idAutor);
         if (autorOptional.isEmpty()) {
@@ -115,11 +115,11 @@ public class AutorController  implements GenericController{
             @ApiResponse(responseCode = "200", description = "Sucesso!")
     })
     public ResponseEntity<List<AutorDTO>> pesquisar(@RequestParam(value = "nome", required = false) String nome,@RequestParam(value = "nacionalidade", required = false) String nacionalidade){
-        log.trace("pesquisa autores");
+/*        log.trace("pesquisa autores");
         log.debug("pesquisa autores");
         log.info("pesquisa autores");
         log.warn("pesquisa autores");
-        log.error("pesquisa autores");
+        log.error("pesquisa autores");*/
         List<Autor> resultado = service.pesquisaByExample(nome, nacionalidade);
         List<AutorDTO> lista = resultado.stream().map(mapper :: toDTO).collect(Collectors.toList());
         return ResponseEntity.ok(lista);

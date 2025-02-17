@@ -5,6 +5,7 @@ import io.github.fabiofavaleiro.libraryapi.controller.dto.ErroResposta;
 import io.github.fabiofavaleiro.libraryapi.exception.CampoInvalidoException;
 import io.github.fabiofavaleiro.libraryapi.exception.OperacaoNaoPermitidaException;
 import io.github.fabiofavaleiro.libraryapi.exception.RegistroDuplicadoException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -21,11 +22,13 @@ import java.util.stream.Collectors;
 
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ErroResposta handleMethodArgumentValidException(MethodArgumentNotValidException e) {
+        log.error("Erro de validação: {}", e.getMessage());
         List<FieldError> fieldErrors = e.getFieldErrors();
         List<ErroCampo> listaErros = fieldErrors
                 .stream()
@@ -65,6 +68,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErroResposta handleErrosNaoTratados(RuntimeException e){
+        log.error("Erro inesperado!!!", e);
         return new ErroResposta(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Ocorreu um erro inesperado, favor abra um chamamdo em nosso portal //link//, e aguarde!", List.of());
     }
 
