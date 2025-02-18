@@ -43,3 +43,13 @@ client_secret varchar(400) not null,
 redirect_uri varchar(200) not null,
 scope varchar(50)
 );
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp"; ## usei este comando para abilitar a geração de uuid no postgres
+
+insert into usuario
+(id, login,senha, email, roles)
+values
+( uuid_generate_v4(), 'gerente', '$2a$12$XI2m1I7bTGeL7s3UTlc2T.cSXFjQvQRnV4tdIddXFBSf9i3/rpfTq',
+'gerente@adm.com', '{GERENTE}'
+)
+## para a senha do gerente usei um gerador de bcrypt
