@@ -41,5 +41,5 @@ id uuid not null,
 client_id varchar(150) not null,
 client_secret varchar(400) not null,
 redirect_uri varchar(200) not null,
-scope vachar(50)
+scope varchar(50)
 );

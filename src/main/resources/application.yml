@@ -1,13 +1,15 @@
 spring:
   application:
     name: libraryapi
+#  profiles:
+#    active: default
   output:
     ansi:
       enAbled: ALWAYS
   datasource:
-    url: jdbc:postgresql://localhost:5432/library
-    username: postgres
-    password: postgres
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/library}
+    username: ${DATASOURCE_USERNAME:postgres}
+    password: ${DATASOURCE_PASSWORD:postgres}
     driverClassName: org.postgresql.Driver
   jpa:
     show-sql: true
@@ -25,7 +27,7 @@ spring:
 
 logging:
   pattern:
-    console: '%clr(%d{dd-MM-yyyy HH:mm:ss}){faint} %clr(%5p) %clr([%t]){faint} %clr(%-40.40logger){cyan} %clr(:){yellow} %m%n'
+    console: '%clr(%d{yyyy-MM-dd HH:mm:ss}){faint} %clr(%5p) %clr([%t]){faint} %clr(%-40.40logger){cyan} %clr(:){yellow} %m%n'
   life:
     name: app.log
   level:
@@ -58,3 +60,23 @@ management:
 
 springdoc:
   override-with-generic-response: false
+
+
+# production
+---
+spring:
+  config:
+    activate:
+      on-profile: production
+  jpa:
+    show-sql: true
+  
+# homologacao
+---
+spring:
+  config:
+    activate:
+      on-profile: homologacao
+  jpa:
+    show-sql: false
+
